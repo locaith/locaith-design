@@ -103,6 +103,41 @@
       position: relative;
       overflow: hidden;
     }
+
+    /* INVITATION CARD - A5 Portrait (148mm x 210mm) */
+    .print-page.invitation-card {
+      width: 148mm;
+      min-height: 210mm;
+    }
+
+    /* ========== RESPONSIVE MOBILE PREVIEW ========== */
+    @media (max-width: 768px) {
+      .print-page {
+        /* Scale down A4 to fit mobile screen */
+        width: 100%;
+        max-width: 100vw;
+        min-height: auto;
+        aspect-ratio: 210 / 297;
+        transform-origin: top center;
+      }
+
+      .print-page.invitation-card {
+        aspect-ratio: 148 / 210;
+      }
+    }
+
+    /* Tablet responsive */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .print-page {
+        width: 170mm;
+        min-height: 240mm;
+      }
+
+      .print-page.invitation-card {
+        width: 120mm;
+        min-height: 170mm;
+      }
+    }
   </style>
   <script type="importmap">
 {

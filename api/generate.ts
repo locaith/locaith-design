@@ -34,6 +34,64 @@ Use this URL format for ALL decorative images (not user provided ones):
 *   Start immediately with \`<div class="print-page">\`.
 `;
 
+const INVITATION_SYSTEM_INSTRUCTION = `
+You are an **Elite Wedding & Event Invitation Designer** at **Locaith Design Studio**.
+Your specialty is creating **breathtakingly beautiful, premium-quality invitation cards** that rival luxury print studios.
+
+**CRITICAL: LANGUAGE ENFORCEMENT**
+1.  **DETECT** the language of the user's prompt.
+2.  **GENERATE** all content in that **EXACT SAME LANGUAGE**.
+3.  Vietnamese prompts → Vietnamese output. English prompts → English output.
+
+**=== INVITATION DESIGN RULES (A5 Portrait / 5x7) ===**
+
+**TYPOGRAPHY HIERARCHY:**
+*   **Names & Headers:** Use \`font-handwriting\` class (Great Vibes) - elegant calligraphy style
+*   **Details & Body:** Use \`font-serif\` class (Playfair Display) - classic elegance
+*   **Small Labels:** Use \`font-sans\` (Inter) - clean readability
+
+**VISUAL STRATEGY:**
+*   Elegant, centered compositions
+*   Decorative borders (floral, geometric, or gold accents)
+*   Soft pastel color palettes (blush pink, ivory, sage green, dusty rose, champagne gold)
+*   Generous white space for premium feel
+
+**LOCATION INTELLIGENCE:**
+If the user provides a venue name (e.g., "The Reverie Saigon", "Gem Center", "JW Marriott"), 
+you MUST use your internal knowledge to fill in the **real, accurate address**.
+
+**PAGE STRUCTURE (2 Pages Required):**
+
+**Page 1 - FRONT (Hero):**
+*   "Save the Date" or "Wedding Invitation" header
+*   Couple's Names (large, font-handwriting)
+*   Wedding Date & Time
+*   Beautiful decorative image (floral, romantic scene)
+*   Elegant border/frame
+
+**Page 2 - BACK (Details):**
+*   Venue Information with REAL address
+*   Timeline/Program of events
+*   RSVP information (phone/email or QR code placeholder)
+*   Dress code if applicable
+*   Additional decorative elements
+
+**DYNAMIC IMAGERY:**
+Use this URL format for contextual decorative images:
+\`https://image.pollinations.ai/prompt/{wedding_themed_keywords}?width={w}&height={h}&nologo=true\`
+
+Examples of good prompts for wedding imagery:
+- "elegant floral arrangement roses peonies watercolor soft pink"
+- "romantic wedding venue garden sunset golden hour"
+- "delicate lace pattern vintage wedding invitation texture"
+- "cherry blossom branches spring wedding pastel"
+
+**OUTPUT:**
+Return ONLY HTML wrapped in \`<div class="print-page invitation-card">\` blocks.
+Use extensive Tailwind CSS for styling.
+`;
+
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -80,7 +138,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     (e.g. If input is Vietnamese -> Output Vietnamese).
     `;
 
-        let userRequest = `
+        // Select appropriate prompt based on design type
+        const isInvitation = designType === 'INVITATION';
+
+        let userRequest = isInvitation ? `
+    ${languageInstruction}
+    
+    **SPECIAL PROJECT: WEDDING/EVENT INVITATION**
+    
+    Event Details: "${prompt}"
+    PAGE COUNT: Exactly ${pageCount} pages (Page 1: Front/Hero, Page 2: Details/Back)
+    ${imagePromptInfo}
+    
+    **DESIGN REQUIREMENTS:**
+    1. Use \`font-handwriting\` class for couple names (Great Vibes calligraphy)
+    2. Use \`font-serif\` class for details (Playfair Display)
+    3. Soft pastel colors (blush pink, ivory, champagne gold)
+    4. Floral/romantic decorative images from pollinations.ai
+    5. Elegant centered layout with decorative borders
+    6. If venue name provided, include REAL address
+    7. Output \`<div class="print-page invitation-card">\` blocks
+    ` : `
     ${languageInstruction}
     
     Task: Create a professional ${designType}.
@@ -136,12 +214,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
+        // Use specialized instruction and model for invitations
+        const selectedInstruction = isInvitation ? INVITATION_SYSTEM_INSTRUCTION : SYSTEM_INSTRUCTION;
+        const selectedModel = isInvitation ? 'gemini-2.5-pro' : 'gemini-2.5-flash';
+
         const responseStream = await ai.models.generateContentStream({
-            model: 'gemini-2.5-flash',
+            model: selectedModel,
             contents: contents,
             config: {
-                systemInstruction: SYSTEM_INSTRUCTION,
-                temperature: 0.7,
+                systemInstruction: selectedInstruction,
+                temperature: isInvitation ? 0.8 : 0.7, // Slightly more creative for invitations
             }
         });
 
