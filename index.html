@@ -1,70 +1,109 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gemini Design Studio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: 'class',
-        theme: {
-          extend: {
-            colors: {
-              background: '#09090b', // Zinc 950
-              surface: '#18181b', // Zinc 900
-              primary: '#6366f1', // Indigo 500
-              secondary: '#a1a1aa', // Zinc 400
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'Lora', 'serif'],
-              display: ['Cinzel', 'serif'],
-              handwriting: ['Great Vibes', 'cursive'],
-            }
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Locaith AI Design Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#09090b', // Zinc 950
+            surface: '#18181b', // Zinc 900
+            primary: '#6366f1', // Indigo 500
+            secondary: '#a1a1aa', // Zinc 400
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'Lora', 'serif'],
+            display: ['Cinzel', 'serif'],
+            handwriting: ['Great Vibes', 'cursive'],
           }
         }
       }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <style>
-      body { font-family: 'Inter', sans-serif; background-color: #09090b; color: #f4f4f5; }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar { width: 8px; height: 8px; }
-      ::-webkit-scrollbar-track { background: #09090b; }
-      ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
-      ::-webkit-scrollbar-thumb:hover { background: #3f3f46; }
-      
-      /* Hide scrollbar for clean preview but allow scroll */
-      .no-scrollbar::-webkit-scrollbar { display: none; }
-      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    }
+  </script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@400;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Great+Vibes&display=swap"
+    rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
+    }
 
-      .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-      .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-      .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
-      
-      /* Content Editable Focus Outline */
-      [contenteditable="true"]:focus {
-        outline: 2px dashed #6366f1;
-        outline-offset: 2px;
-        border-radius: 4px;
-      }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
 
-      /* PRINT PAGE CONTAINER STYLE (Essential for UI & Export) */
-      .print-page {
-          background-color: white;
-          margin-left: auto;
-          margin-right: auto;
-          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-          /* Default A4 portrait */
-          width: 210mm;
-          min-height: 297mm;
-          position: relative;
-          overflow: hidden;
-      }
-    </style>
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3f3f46;
+    }
+
+    /* Hide scrollbar for clean preview but allow scroll */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Content Editable Focus Outline */
+    [contenteditable="true"]:focus {
+      outline: 2px dashed #6366f1;
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* PRINT PAGE CONTAINER STYLE (Essential for UI & Export) */
+    .print-page {
+      background-color: white;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      /* Default A4 portrait */
+      width: 210mm;
+      min-height: 297mm;
+      position: relative;
+      overflow: hidden;
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -79,10 +118,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
