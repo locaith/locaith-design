@@ -1,0 +1,5 @@
+{
+  "name": "thiết kế sản phẩm brocher, salekit, pitching bằng Locaith AI",
+  "description": "A professional AI-powered design platform for creating brochures, slides, CVs, and pitch decks using Gemini 3 Pro. Features real-time streaming, Supabase history, and a modern dashboard.",
+  "requestFramePermissions": []
+}
