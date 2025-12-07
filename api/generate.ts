@@ -214,9 +214,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         res.setHeader('Cache-Control', 'no-cache');
         res.setHeader('Connection', 'keep-alive');
 
-        // Use specialized instruction and model for invitations
+        // Use specialized instruction for invitations, same powerful model for all
         const selectedInstruction = isInvitation ? INVITATION_SYSTEM_INSTRUCTION : SYSTEM_INSTRUCTION;
-        const selectedModel = isInvitation ? 'gemini-2.5-pro' : 'gemini-2.5-flash';
+        const selectedModel = 'gemini-3-pro-preview'; // Use the most powerful model for all designs
 
         const responseStream = await ai.models.generateContentStream({
             model: selectedModel,
